@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Flashlight Lamp 🪔</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #2d1b69 50%, #1e3a8a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .flashlight-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .lamp-visual {
+            width: 200px;
+            height: 300px;
+            margin: 0 auto 30px;
+            position: relative;
+            background: radial-gradient(circle at 50% 20%, #444 0%, #222 60%, #111 100%);
+            border-radius: 50% 50% 40% 40%;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.6),
+                inset 0 5px 20px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lamp-visual::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #666 0%, #444 70%, #222 100%);
+            border-radius: 50%;
+            box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .lamp-visual.on {
+            background: radial-gradient(circle at 50% 20%, #fff 0%, #ffeaa7 40%, #fdcb6e 70%, #f39c12 100%);
+            box-shadow: 
+                0 0 100px #fff,
+                0 0 200px #ffeaa7,
+                0 0 400px #fdcb6e,
+                inset 0 5px 30px rgba(255, 255, 255, 0.8);
+            animation: flashlightGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes flashlightGlow {
+            0% {
+                box-shadow: 
+                    0 0 100px #fff,
+                    0 0 200px #ffeaa7,
+                    0 0 400px #fdcb6e,
+                    inset 0 5px 30px rgba(255, 255, 255, 0.8);
+            }
+            100% {
+                box-shadow: 
+                    0 0 120px #fff,
+                    0 0 250px #ffeaa7,
+                    0 0 500px #fdcb6e,
+                    inset 0 5px 40px rgba(255, 255, 255, 1);
+            }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .power-btn {
+            background: linear-gradient(145deg, #ff4757, #ff3838);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 10px 30px rgba(255, 71, 87, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .power-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 15px 40px rgba(255, 71, 87, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .power-btn.on {
+            background: linear-gradient(145deg, #00b894, #00a085);
+            box-shadow: 
+                0 10px 30px rgba(0, 184, 148, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .power-btn.on:hover {
+            box-shadow: 
+                0 15px 40px rgba(0, 184, 148, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .power-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .status {
+            margin-top: 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+            padding: 15px 25px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 250px;
+        }
+
+        .status.on {
+            background: rgba(0, 184, 148, 0.3);
+            box-shadow: 0 0 20px rgba(0, 184, 148, 0.5);
+            color: #00b894;
+        }
+
+        .status.off {
+            color: #ff6b6b;
+        }
+
+        .permission-info {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .flashlight-container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .lamp-visual {
+                width: 160px;
+                height: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flashlight-container">
+        <h1>📱 Flashlight Lamp</h1>
+        
+        <div class="lamp-visual" id="lampVisual"></div>
+        
+        <button class="power-btn" id="powerBtn">Turn On Flashlight</button>
+        
+        <div class="status off" id="status">Flashlight is OFF</div>
+        
+        <div class="permission-info">
+            🔦 <strong>Direct Phone Flashlight Control</strong><br>
+            Click "Turn On" to activate your phone's camera flash!
+        </div>
+    </div>
+
+    <script>
+        const powerBtn = document.getElementById('powerBtn');
+        const lampVisual = document.getElementById('lampVisual');
+        const status = document.getElementById('status');
+        
+        let flashlightStream = null;
+        let isFlashlightOn = false;
+        let torchSupported = false;
+
+        // Check if flashlight is supported
+        async function checkFlashlightSupport() {
+            try {
+                // Test camera access with torch capability
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { 
+                        facingMode: 'environment',
+                        torch: true 
+                    }
+                });
+                torchSupported = true;
+                stream.getTracks().forEach(track => track.stop());
+                return true;
+            } catch (error) {
+                console.log('Flashlight not supported or permission denied');
+                torchSupported = false;
+                return false;
+            }
+        }
+
+        // Turn flashlight ON
+        async function turnFlashlightOn() {
+            try {
+                flashlightStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment',
+                        torch: true
+                    }
+                });
+                
+                const videoTrack = flashlightStream.getVideoTracks()[0];
+                const capabilities = await videoTrack.getCapabilities();
+                
+                if (capabilities.torch) {
+                    await videoTrack.applyConstraints({ advanced: [{ torch: true }] });
+                    isFlashlightOn = true;
+                    
+                    // Update UI
+                    powerBtn.textContent = 'Turn Off Flashlight';
+                    powerBtn.classList.add('on');
+                    lampVisual.classList.add('on');
+                    status.textContent = '✅ Flashlight is ON';
+                    status.classList.remove('off');
+                    status.classList.add('on');
+                    
+                    console.log('✅ Flashlight turned ON');
+                } else {
+                    throw new Error('Torch not supported');
+                }
+            } catch (error) {
+                console.error('❌ Failed to turn on flashlight:', error);
+                alert('❌ Flashlight not available!\n\n' +
+                      '• Grant camera permission\n' +
+                      '• Use a phone with flashlight\n' +
+                      '• Try Chrome/Safari on mobile');
+                turnFlashlightOff();
+            }
+        }
+
+        // Turn flashlight OFF
+        async function turnFlashlightOff() {
+            if (flashlightStream) {
+                flashlightStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+                flashlightStream = null;
+            }
+            
+            isFlashlightOn = false;
+            
+            // Update UI
+            powerBtn.textContent = 'Turn On Flashlight';
+            powerBtn.classList.remove('on');
+            lampVisual.classList.remove('on');
+            status.textContent = '❌ Flashlight is OFF';
+            status.classList.remove('on');
+            status.classList.add('off');
+            
+            console.log('❌ Flashlight turned OFF');
+        }
+
+        // Main toggle function
+        powerBtn.addEventListener('click', async () => {
+            if (isFlashlightOn) {
+                await turnFlashlightOff();
+            } else {
+                await turnFlashlightOn();
+            }
+        });
+
+        // Initialize
+        async function init() {
+            const supported = await checkFlashlightSupport();
+            if (!supported) {
+                powerBtn.disabled = true;
+                powerBtn.textContent = 'Flashlight Not Supported';
+                status.textContent = '❌ Device doesn\'t support flashlight';
+                status.classList.add('off');
+            }
+        }
+
+        // Handle page visibility change (screen lock/background)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && isFlashlightOn) {
+                turnFlashlightOff();
+            }
+        });
+
+        // Prevent accidental double-clicks
+        let clickTimeout;
+        powerBtn.addEventListener('click', (e) => {
+            if (clickTimeout) return;
+            clickTimeout = setTimeout(() => {
+                clickTimeout = null;
+            }, 500);
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', init);
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', turnFlashlightOff);
+    </script>
+</body>
+</html>
